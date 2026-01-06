@@ -2,7 +2,7 @@
   "Enabled": true,
   "AutoHideOnLoad": true,
   "AutoHideDaily": true,
-  "PauseWhenEmpty": false,
+  "PauseWhenEmpty": true,
   "InstantSleepWhenReady": true,
   "HideMethod": "warp",
   "WarpLocation": "Desert",
