@@ -77,7 +77,7 @@
         },
         {
             "name": "Steam Password",
-            "description": "Required only one first install.\r\nSuggest removing it afterwards.",
+            "description": "Required only one first install.\r\nSuggest changing this variable to a fake password afterwards.",
             "env_variable": "STEAM_PASS",
             "default_value": "",
             "user_viewable": true,
