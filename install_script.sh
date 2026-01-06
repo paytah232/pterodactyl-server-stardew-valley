@@ -55,16 +55,10 @@ mkdir -p ./storage
 mkdir -p ./logs
 
 ## Stardew Valley specific setup.
-# wget https://github.com/Pathoschild/SMAPI/releases/download/3.8/SMAPI-3.8.0-installer.zip -qO ./storage/nexus.zip
-#wget https://github.com/Pathoschild/SMAPI/releases/download/4.3.2/SMAPI-4.3.2-installer.zip -qO ./storage/nexus.zip
-# /bin/bash -c "cd '/mnt/server/nexus/SMAPI 4.3.2 installer/' && printf '2\n1\n1\n\n' | ./install\ on\ Linux.sh"
-/bin/bash -c "cd '/mnt/server/nexus/SMAPI 4.3.2 installer/internal/linux/' && printf '2\n1\n1\n' | ./SMAPI.Installer"
+wget https://github.com/Pathoschild/SMAPI/releases/download/4.3.2/SMAPI-4.3.2-installer.zip -qO ./storage/nexus.zip
 unzip ./storage/nexus.zip -d ./nexus/
-# /bin/bash -c "echo -e \"2\n/mnt/server\n1\n\" | /usr/bin/mono /mnt/server/nexus/SMAPI\ 3.8.0\ installer/internal/unix-install.exe"
-# /bin/bash -c "printf '2\n/mnt/server\n1\n' | /usr/bin/mono '/mnt/server/nexus/SMAPI 3.8.0 installer/internal/unix-install.exe'"
 /bin/bash -c "echo -e \"/mnt/server\n1\n\" | /bin/bash '/mnt/server/nexus/SMAPI 4.3.2 installer/install on Linux.sh'"
 wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/stardew_valley_server.config -qO ./.config/StardewValley/startup_preferences
-#wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/i3.config -qO ./.config/i3/config
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AlwaysOnServer.zip -qO ./storage/AlwaysOnServer.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/UnlimitedPlayers.zip -qO ./storage/UnlimitedPlayers.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AutoLoadGame.zip -qO ./storage/AutoLoadGame.zip
