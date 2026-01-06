@@ -3,14 +3,10 @@
 # Enable strict error handling to exit immediately on failure
 set -Eeuo pipefail
 trap 'echo "[ERROR] Script failed at line $LINENO"; exit 1' ERR
-#
-# Server Files: /mnt/server
-# Image to install with is 'mono:latest'
-apt -y update
-apt -y --no-install-recommends install \
-  curl lib32gcc-s1 ca-certificates wget unzip \
-  libnotify-bin xvfb x11vnc x11-utils i3
-#apt -y install mono-complete # Needed only if not installing on the modo image ghcr.io/pelican-eggs/yolks:mono_latest
+
+# Install Steam Immediately, in case of STEAM_AUTH usage
+cd /tmp
+mkdir -p /mnt/server/steamcmd
 
 ## just in case someone removed the defaults.
 if [ "${STEAM_USER}" == "" ]; then
@@ -24,9 +20,6 @@ if [ "${STEAM_USER}" == "" ]; then
 else
     echo -e "user set to ${STEAM_USER}"
 fi
-
-cd /tmp
-mkdir -p /mnt/server/steamcmd
 
 # SteamCMD fails otherwise for some reason, even running as root.
 # This is changed at the end of the install process anyways.
@@ -49,7 +42,7 @@ STEAMCMD_LOG=$(mktemp)
   +quit | tee "$STEAMCMD_LOG"
 
 # Hard fail on Steam Guard / login issues
-if grep -Eqi "two-factor|steam guard|incorrect|failed to login|error" "$STEAMCMD_LOG"; then
+if grep -Eqi "Two-factor code mismatch" "$STEAMCMD_LOG"; then
     echo "[ERROR] SteamCMD login failed (Steam Guard / credentials issue)"
     exit 1
 fi
@@ -61,6 +54,15 @@ cp -v /mnt/server/steamcmd/linux32/steamclient.so /mnt/server/.steam/sdk32/steam
 ## set up 64 bit libraries
 mkdir -p /mnt/server/.steam/sdk64
 cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steamclient.so
+
+## Install dependencies
+# Server Files: /mnt/server
+# Image to install with is 'mono:latest'
+apt -y update
+apt -y --no-install-recommends install \
+  curl lib32gcc-s1 ca-certificates wget unzip \
+  libnotify-bin xvfb x11vnc x11-utils i3
+#apt -y install mono-complete # Needed only if not installing on the modo image ghcr.io/pelican-eggs/yolks:mono_latest
 
 ## Game specific setup.
 cd /mnt/server/
