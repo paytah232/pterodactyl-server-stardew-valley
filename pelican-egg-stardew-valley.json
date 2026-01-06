@@ -4,10 +4,10 @@
         "version": "PLCN_v3",
         "update_url": null
     },
-    "exported_at": "2026-01-06T23:43:18+10:00",
+    "exported_at": "2026-01-07T00:17:12+10:00",
     "name": "Stardew Valley",
     "author": "peter.game.servers@gmail.com",
-    "uuid": "bce0c278-57d0-4585-8bf0-02d286c6aed8",
+    "uuid": "42806dad-de5c-440a-801b-0b84acbebf6b",
     "description": "Using https:\/\/github.com\/paytah232\/pterodactyl-server-stardew-valley",
     "image": null,
     "tags": [],
@@ -91,12 +91,13 @@
         },
         {
             "name": "Steam Auth",
-            "description": "Optional - Put your steam guard code in here if you have it enabled.\r\nIf you do, seems you can use the code for longer than it is on the app, but only once.",
+            "description": "Optional - Put your steam guard code in here if you have it enabled and want to provide it directly.\r\nIf you do, seems you can use the code for longer than it is on the app, but only once.\r\n\r\nIf you have it enabled, and don't put it here, you will need to respond on the app during server install.",
             "env_variable": "STEAM_AUTH",
             "default_value": "",
             "user_viewable": true,
             "user_editable": true,
             "rules": [
+                "nullable",
                 "string",
                 "max:6"
             ],
