@@ -28,5 +28,5 @@ x11vnc -display :10 -rfbport 5900 -rfbportv6 -1 -no6 -noipv6 -httpportv6 -1 -for
 
 #sleep 5
 
-cd /mnt/server
+cd /home/container
 ./StardewModdingAPI

@@ -72,7 +72,7 @@ mkdir -p ./logs
 ## Stardew Valley specific setup.
 wget https://github.com/Pathoschild/SMAPI/releases/download/4.3.2/SMAPI-4.3.2-installer.zip -qO ./storage/nexus.zip
 unzip ./storage/nexus.zip -d ./nexus/
-/bin/bash -c "echo -e \"/mnt/server\n1\n\" | /bin/bash '/mnt/server/nexus/SMAPI 4.3.2 installer/install on Linux.sh'"
+/bin/bash -c "cd '/mnt/server/nexus/SMAPI 4.3.2 installer/internal/linux/' && printf '2\n1\n1\n\n' | ./SMAPI.Installer"
 wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/stardew_valley_server.config -qO ./.config/StardewValley/startup_preferences
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AlwaysOnServer.zip -qO ./storage/AlwaysOnServer.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/UnlimitedPlayers.zip -qO ./storage/UnlimitedPlayers.zip
