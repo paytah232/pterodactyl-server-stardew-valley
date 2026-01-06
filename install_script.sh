@@ -1,5 +1,5 @@
 #!/bin/bash
-# steamcmd Base Installation Script
+
 # Enable strict error handling to exit immediately on failure
 set -Eeuo pipefail
 trap 'echo "[ERROR] Script failed at line $LINENO"; exit 1' ERR
@@ -8,7 +8,6 @@ trap 'echo "[ERROR] Script failed at line $LINENO"; exit 1' ERR
 cd /tmp
 mkdir -p /mnt/server/steamcmd
 
-## just in case someone removed the defaults.
 if [ "${STEAM_USER}" == "" ]; then
     echo -e "steam user is not set.\n"
     echo -e "Using anonymous user.\n"
@@ -32,7 +31,6 @@ tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
 cd /mnt/server/steamcmd
 
 ## install game using steamcmd
-#./steamcmd.sh +force_install_dir /mnt/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +app_update ${SRCDS_APPID} validate +quit
 STEAMCMD_LOG=$(mktemp)
 
 ./steamcmd.sh \
@@ -57,12 +55,10 @@ cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steam
 
 ## Install dependencies
 # Server Files: /mnt/server
-# Image to install with is 'mono:latest'
 apt -y update
 apt -y --no-install-recommends install \
   curl lib32gcc-s1 ca-certificates wget unzip \
-  libnotify-bin xvfb x11vnc x11-utils i3
-#apt -y install mono-complete # Needed only if not installing on the modo image ghcr.io/pelican-eggs/yolks:mono_latest
+  libnotify-bin xvfb x11vnc x11-utils i3 mono-complete
 
 ## Game specific setup.
 cd /mnt/server/
