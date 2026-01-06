@@ -17,9 +17,5 @@ RUN apt-get update && \
 # Set working directory (Pterodactyl default)
 WORKDIR /home/container
 
-# Copy Stardew startup script
-COPY stardew-valley-server.sh /home/container/stardew-valley-server.sh
-RUN chmod +x /home/container/stardew-valley-server.sh
-
-# Default command
-CMD ["./stardew-valley-server.sh"]
+# Default command (no script included in the image)
+CMD ["bash"]
