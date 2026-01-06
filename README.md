@@ -2,6 +2,8 @@
 
 This repository provides the files and scripts needed to run a **Stardew Valley multiplayer server** inside a Pterodactyl instance. It includes setup scripts, mod management, and optional VNC access for GUI setup.
 
+It was an attempt at many things, hugely supported by ChatGPT and Claude on the way. As such, I don't expect it to be optimised, and probably too many things are installed etc, but it worked for me. If you know how to improve it, feel free!
+
 ---
 
 ## Overview
