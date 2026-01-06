@@ -17,5 +17,5 @@ RUN apt-get update && \
 # Set working directory (Pterodactyl default)
 WORKDIR /home/container
 
-# Default command (no script included in the image)
-CMD ["bash"]
+# Default command
+CMD ["./stardew-valley-server.sh"]

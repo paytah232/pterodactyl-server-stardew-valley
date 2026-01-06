@@ -29,7 +29,7 @@ It was an attempt at many things, hugely supported by ChatGPT and Claude on the 
 2. **Create a new server** using the imported egg.
 3. **Set the environment variables** in the panel (see below).
 4. **Start the server**. Installation scripts will download and configure the server and optional mods.
-5. First time installation, you'll need to access via VNC to set up a new save (then you can turn VNC off).
+5. First time installation, you'll need to access via VNC to set up a new save (then you can turn VNC off). If the scaling is off, a server restart seems to fix it.
  * Some helpful information further I followed [here](https://github.com/DaanSelen/stardew-multiplayer), but essentially:
   * Log in via VNC Viewer
   * In Menus: CO-OP -> Host -> Settings -> Start. Reboot to see if it auto loads in, and you're golden.
