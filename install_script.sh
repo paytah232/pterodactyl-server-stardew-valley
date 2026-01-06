@@ -1,11 +1,15 @@
 #!/bin/bash
 # steamcmd Base Installation Script
+# Enable strict error handling to exit immediately on failure
+set -Eeuo pipefail
+trap 'echo "[ERROR] Script failed at line $LINENO"; exit 1' ERR
 #
 # Server Files: /mnt/server
 # Image to install with is 'mono:latest'
 apt -y update
-apt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates wget unzip libnotify-bin xvfb x11vnc x11-utils i3
-apt -y install libnotify-bin xvfb x11vnc x11-utils i3
+apt -y --no-install-recommends install \
+  curl lib32gcc-s1 ca-certificates wget unzip \
+  libnotify-bin xvfb x11vnc x11-utils i3
 #apt -y install mono-complete # Needed only if not installing on the modo image ghcr.io/pelican-eggs/yolks:mono_latest
 
 ## just in case someone removed the defaults.
@@ -35,7 +39,20 @@ tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
 cd /mnt/server/steamcmd
 
 ## install game using steamcmd
-./steamcmd.sh +force_install_dir /mnt/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +app_update ${SRCDS_APPID} validate +quit
+#./steamcmd.sh +force_install_dir /mnt/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +app_update ${SRCDS_APPID} validate +quit
+STEAMCMD_LOG=$(mktemp)
+
+./steamcmd.sh \
+  +force_install_dir /mnt/server \
+  +login "${STEAM_USER}" "${STEAM_PASS}" "${STEAM_AUTH}" \
+  +app_update "${SRCDS_APPID}" validate \
+  +quit | tee "$STEAMCMD_LOG"
+
+# Hard fail on Steam Guard / login issues
+if grep -Eqi "two-factor|steam guard|incorrect|failed to login|error" "$STEAMCMD_LOG"; then
+    echo "[ERROR] SteamCMD login failed (Steam Guard / credentials issue)"
+    exit 1
+fi
 
 ## set up 32 bit libraries
 mkdir -p /mnt/server/.steam/sdk32
