@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Enable strict error handling to exit immediately on failure
+echo "Tested up to Stardew Valley 1.6.15"
 set -Eeuo pipefail
 trap 'echo "[ERROR] Script failed at line $LINENO"; exit 1' ERR
 
@@ -55,10 +56,17 @@ cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steam
 
 ## Install dependencies
 # Server Files: /mnt/server
-apt -y update
-apt -y --no-install-recommends install \
-  curl lib32gcc-s1 ca-certificates wget unzip \
-  libnotify-bin xvfb x11vnc x11-utils i3 mono-complete
+apt-get update -y
+apt-get install -y --no-install-recommends \
+  ca-certificates \
+  curl \
+  wget \
+  unzip \
+  lib32gcc-s1 \
+  mono-runtime \
+  xvfb
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 
 ## Game specific setup.
 cd /mnt/server/
@@ -71,25 +79,25 @@ mkdir -p ./logs
 
 ## Stardew Valley specific setup.
 wget https://github.com/Pathoschild/SMAPI/releases/download/4.3.2/SMAPI-4.3.2-installer.zip -qO ./storage/nexus.zip
-unzip ./storage/nexus.zip -d ./nexus/
+unzip -o ./storage/nexus.zip -d ./nexus/
 /bin/bash -c "cd '/mnt/server/nexus/SMAPI 4.3.2 installer/internal/linux/' && printf '2\n1\n1\n\n' | ./SMAPI.Installer"
-wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/stardew_valley_server.config -qO ./.config/StardewValley/startup_preferences
+wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/server/stardew_valley_server.config -qO ./.config/StardewValley/startup_preferences
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AlwaysOnServer.zip -qO ./storage/AlwaysOnServer.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/UnlimitedPlayers.zip -qO ./storage/UnlimitedPlayers.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AutoLoadGame.zip -qO ./storage/AutoLoadGame.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/StardewPortChanger.zip -qO ./storage/StardewPortChanger.zip
 wget https://github.com/paytah232/pterodactyl-server-stardew-valley/raw/main/mods/AutoHideHost.zip -qO ./storage/AutoHideHost.zip
-unzip ./storage/AlwaysOnServer.zip -d ./Mods
-unzip ./storage/UnlimitedPlayers.zip -d ./Mods
-unzip ./storage/AutoLoadGame.zip -d ./Mods
-unzip ./storage/StardewPortChanger.zip -d ./Mods
-unzip ./storage/AutoHideHost.zip -d ./Mods
-wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/stardew-valley-server.sh -qO ./stardew-valley-server.sh
+unzip -o ./storage/AlwaysOnServer.zip -d ./Mods
+unzip -o ./storage/UnlimitedPlayers.zip -d ./Mods
+unzip -o ./storage/AutoLoadGame.zip -d ./Mods
+unzip -o ./storage/StardewPortChanger.zip -d ./Mods
+unzip -o ./storage/AutoHideHost.zip -d ./Mods
+wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/server/stardew-valley-server.sh -qO ./stardew-valley-server.sh
 wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/mods/AutoHideHost.json -qO ./Mods/AutoHideHost/config.json
 wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/mods/AutoLoadGame.json -qO ./Mods/AutoLoadGame/config.json
 wget https://raw.githubusercontent.com/paytah232/pterodactyl-server-stardew-valley/main/mods/StardewPortChanger.json -qO ./Mods/StardewPortChanger/config.json
 chmod +x ./stardew-valley-server.sh 
-#rm ./storage/alwayson.zip ./storage/unlimitedplayers.zip ./storage/autoloadgame.zip
+
 # Rename the StardewValley executable to fix server starting conflicts
 mv StardewValley StardewValley.exe.bak
 echo 'Stardew Valley Installation complete.\nOpen in a VNC view to first create the CO-OP game.\nThen, restart the server, log back in and make sure it loaded the save again.'

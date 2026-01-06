@@ -1,0 +1,146 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PANEL",
+    "meta": {
+        "version": "PLCN_v3",
+        "update_url": null
+    },
+    "exported_at": "2026-01-06T23:43:18+10:00",
+    "name": "Stardew Valley",
+    "author": "peter.game.servers@gmail.com",
+    "uuid": "bce0c278-57d0-4585-8bf0-02d286c6aed8",
+    "description": "Using https:\/\/github.com\/paytah232\/pterodactyl-server-stardew-valley",
+    "image": null,
+    "tags": [],
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/paytah232\/stardew-vnc:latest": "ghcr.io\/paytah232\/stardew-vnc:latest"
+    },
+    "file_denylist": [],
+    "startup_commands": {
+        "Default": ".\/stardew-valley-server.sh"
+    },
+    "config": {
+        "files": "{\r\n    \"Mods\/UnlimitedPlayers\/config.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"PlayerLimit\": \"{{server.environment.PLAYER_LIMIT}}\"\r\n        }\r\n    },\r\n    \"Mods\/StardewPortChanger\/config.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"ServerPort\": \"{{server.allocations.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"[SMAPI] Type 'help' for help, or 'help <cmd>' for a command's usage\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "# Clone the server builder\r\ncurl -o install_script.sh https:\/\/raw.githubusercontent.com\/paytah232\/pterodactyl-server-stardew-valley\/main\/server\/install_script.sh\r\n\r\n# Run it\r\nchmod +x install_script.sh\r\n.\/install_script.sh",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Steam ID",
+            "description": "The ID corresponding to the game to download and run using SRCDS.",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "413150",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": [
+                "required",
+                "in:413150"
+            ],
+            "sort": 1
+        },
+        {
+            "name": "VNC Password",
+            "description": "Recommended to secure VNC access for initial connection",
+            "env_variable": "VNC_PASS",
+            "default_value": "myvncpass",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:20"
+            ],
+            "sort": 2
+        },
+        {
+            "name": "Steam User",
+            "description": "Cannot be anonymous or empty\r\nThis user must own a copy of the game.",
+            "env_variable": "STEAM_USER",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:50",
+                "not_in:anonymous"
+            ],
+            "sort": 3
+        },
+        {
+            "name": "Steam Password",
+            "description": "Required only one first install.\r\nSuggest removing it afterwards.",
+            "env_variable": "STEAM_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:100"
+            ],
+            "sort": 4
+        },
+        {
+            "name": "Steam Auth",
+            "description": "Optional - Put your steam guard code in here if you have it enabled.\r\nIf you do, seems you can use the code for longer than it is on the app, but only once.",
+            "env_variable": "STEAM_AUTH",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "string",
+                "max:6"
+            ],
+            "sort": 5
+        },
+        {
+            "name": "Use VNC",
+            "description": "Leave it on for the first startup, until you've launched a game, then turn it off to save some resources",
+            "env_variable": "USE_VNC",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "in:0,1"
+            ],
+            "sort": 6
+        },
+        {
+            "name": "Player Limit",
+            "description": "Max players in server",
+            "env_variable": "PLAYER_LIMIT",
+            "default_value": "4",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "integer",
+                "min:1"
+            ],
+            "sort": 7
+        },
+        {
+            "name": "VNC Port",
+            "description": "Port to access VNC from.\r\nMake sure to allocate an 'additional' port in server settings for this.",
+            "env_variable": "VNC_PORT",
+            "default_value": "5900",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "integer"
+            ],
+            "sort": 8
+        }
+    ]
+}
