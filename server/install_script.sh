@@ -54,20 +54,6 @@ cp -v /mnt/server/steamcmd/linux32/steamclient.so /mnt/server/.steam/sdk32/steam
 mkdir -p /mnt/server/.steam/sdk64
 cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steamclient.so
 
-## Install dependencies
-# Server Files: /mnt/server
-apt-get update -y
-apt-get install -y --no-install-recommends \
-  ca-certificates \
-  curl \
-  wget \
-  unzip \
-  lib32gcc-s1 \
-  mono-runtime \
-  xvfb
-apt-get clean
-rm -rf /var/lib/apt/lists/*
-
 ## Game specific setup.
 cd /mnt/server/
 mkdir -p ./.config
