@@ -4,10 +4,10 @@
         "version": "PLCN_v3",
         "update_url": null
     },
-    "exported_at": "2026-01-07T00:17:12+10:00",
+    "exported_at": "2026-01-07T18:48:38+10:00",
     "name": "Stardew Valley",
     "author": "peter.game.servers@gmail.com",
-    "uuid": "42806dad-de5c-440a-801b-0b84acbebf6b",
+    "uuid": "f9344246-e566-4601-b6bf-3b3bf09b6b24",
     "description": "Using https:\/\/github.com\/paytah232\/pterodactyl-server-stardew-valley",
     "image": null,
     "tags": [],
@@ -142,6 +142,21 @@
                 "integer"
             ],
             "sort": 8
+        },
+        {
+            "name": "Render FPS",
+            "description": "Not really an FPS control, and experimental, but setting this to a low value (like 5) does reduce server CPU usage, but might affect something in the game - need to test\r\nIf set to 30, the script will ignore this completely and run at whatever it needs to.",
+            "env_variable": "RENDER_FPS",
+            "default_value": "30",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "integer",
+                "min:1",
+                "max:30"
+            ],
+            "sort": 9
         }
     ]
 }

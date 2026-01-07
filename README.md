@@ -45,6 +45,7 @@ It was an attempt at many things, hugely supported by ChatGPT and Claude on the 
 | `VNC_PORT` | Port for VNC access (optional) | `5900` |
 | `VNC_PASS` | VNC password (optional) | `myvncpassword` |
 | `USE_VNC` | Enable VNC (1 = enabled, 0 = disabled) | `1` |
+| `RENDER_FPS` | (Experimental) Set to below 30 FPS to limit the host render fps (try 5) which massively reduces CPU usage. Not sure how this will affect the in game actions... | `1` |
 
 ---
 

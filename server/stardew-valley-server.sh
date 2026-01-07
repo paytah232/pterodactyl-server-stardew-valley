@@ -32,6 +32,33 @@ else
     echo "VNC mode disabled"
 fi
 
+# Approximate render throttling via timer slack
+# RENDER_FPS < 30  -> apply timerslack
+# RENDER_FPS >= 30 -> no throttling (full speed)
+
+FPS="${RENDER_FPS:-30}"
+
+# Validate integer
+case "$FPS" in
+  ''|*[!0-9]*)
+    echo "Invalid RENDER_FPS='$FPS'; skipping render throttle"
+    FPS=30
+    ;;
+esac
+
+if [ "$FPS" -lt 30 ]; then
+  SLACK_NS=$(( 1000000000 / FPS ))
+
+  if [ -w /proc/self/timerslack_ns ]; then
+    echo "$SLACK_NS" > /proc/self/timerslack_ns
+    echo "Render throttle enabled: ~${FPS}Hz (timerslack_ns=$SLACK_NS)"
+  else
+    echo "timerslack_ns not available; cannot apply render throttle"
+  fi
+else
+  echo "RENDER_FPS=$FPS (>=30): render throttle disabled (full speed)"
+fi
+
 # Start Stardew server
 cd /home/container
 exec ./StardewModdingAPI
